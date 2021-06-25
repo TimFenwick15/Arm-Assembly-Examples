@@ -23,7 +23,7 @@ main:
     LDR R2, addr_pi
     VLDR S1, [R2]
 
-    VADD.f32 S2, S0, S1 @ Add two f32
+    VADD.f32 S2, S0, S1 @ Add two f32. Also have VSUB, VMUL, VDIV, VCMP
 
     VCVT.F64.F32 D1, S2
 

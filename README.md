@@ -158,6 +158,9 @@ S0 - S15 (D0 - D7) are scalar mode, meaning you work on them in their locations 
 
 The rest are vector mode which means if they wrap, they can use additional space.
 
+If you do VCMP, you need to copy the flags into the Arm status registers with:
+`VMRS APSR_nzcv, FPSCR`
+
 ## mov vs ldr
 Essentially do the same thing. mov can be faster, but operands must meet space requirements. The assembler may change your ldr for a mov.
 
