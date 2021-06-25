@@ -58,8 +58,8 @@ instructions are a mnemonic followed by operands
 label: = label or function
 
 ## Data
-|--------|----------------------------------------------------------------|
 | Symbol | Meaning                                                        |
+|--------|----------------------------------------------------------------|
 | #      | Literal, imediate value. Numbers in form 0-255 * <sup>2n</sup> |
 | &      | Value in hex, eg #&FF                                          |
 | 0x...  | Value in hex, eg #0xFF                                         |
@@ -91,6 +91,18 @@ Branch to LABEL and continue from there:
 b LABEL
 LABEL ...
 ```
+
+LDRH = load unsigned half-word.
+
+| Name | Data type          | Size /bytes |
+|------|--------------------|-------------|
+|      | word               | 4           |
+| H    | unsigned half-word | 2           |
+| SH   | signed half-word   | 2           |
+| B    | unsigned byte      | 1           |
+| SB   | signed byte        | 1           |
+
+
 ## Branch
 Branch is result of cmp is not equal:
 ```
@@ -116,12 +128,12 @@ swi is a supervisor call, calling a function from the operating system
 
 Current Program Status Register (CPSR) holds flags. It's 31 bits wide, and occurs after the 16 registers.
 
-|-----|------|------------------------|
-| Bit | Name | Meaning                |
-| 31  | N    | Set on negative result |
-| 30  | Z    | Set on zero result     |
-| 29  | C    | Set if a carry occurs  |
-| 28  | V    | Set if overflow occurs |
+| Bit | Name | Meaning                                                     |
+|-----|------|-------------------------------------------------------------|
+| 31  | N    | Set on negative result                                      |
+| 30  | Z    | Set on zero result                                          |
+| 29  | C    | Set if a carry occurs (result greater than 2<sup>32</sup>)  |
+| 28  | V    | Set if overflow occurs (result greater than 2<sup>31</sup>) |
 
 CPSR can be read like a register in the assembly code.
 
@@ -137,6 +149,15 @@ Rather than checking this manually, you'd add a condition onto the next instruct
 
 Eg, BEQ is branch if equal. BGT is branch if greater than.
 
+## Float
+Stored in VFP registers:
+- S0 to S31 for float
+- D0 to D15 for double (in the same memory space, to D0 is S0 + S1)
+
+S0 - S15 (D0 - D7) are scalar mode, meaning you work on them in their locations only.
+
+The rest are vector mode which means if they wrap, they can use additional space.
+
 ## mov vs ldr
 Essentially do the same thing. mov can be faster, but operands must meet space requirements. The assembler may change your ldr for a mov.
 
@@ -146,4 +167,7 @@ Seems like load is for addresses, mov is for values?
 
 ## Git commit empty folders
 Put a .gitignore in the directory. In this case, it's a bin directory where we want to ignore the files too: https://stackoverflow.com/questions/5711120/gitignore-binary-files-that-have-no-extension/25592735#25592735
+
+## Make
+Rule lines need to be tab indented.
 
